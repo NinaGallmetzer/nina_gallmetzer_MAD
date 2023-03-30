@@ -31,8 +31,7 @@ fun generateNumber(): String {
 }
 
 fun isValidInput(input: String): Boolean {
-    val digits = input.toCharArray()
-    return digits.size == 4 && digits.toSet().size == 4
+    return input.all{ it.isDigit() } && input.length == 4 && input.toSet().size == 4
 }
 
 fun countCorrectDigits(number1: String, number2: String): Int {
