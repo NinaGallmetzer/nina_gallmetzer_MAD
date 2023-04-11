@@ -20,8 +20,8 @@ fun Navigation() {
 
         composable(
             route = "detail/{movieId}"
-        ) {
-            DetailScreen(navController)
+        ) { backStackEntry ->
+            DetailScreen(navController, movieId = backStackEntry.arguments?.getString("movieId"))
         }
     }
 }

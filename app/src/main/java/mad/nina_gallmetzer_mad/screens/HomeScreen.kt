@@ -1,7 +1,6 @@
 package mad.nina_gallmetzer_mad.screens
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,6 +17,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.example.movieapp.models.Movie
 import com.example.movieapp.models.getMovies
@@ -68,17 +68,20 @@ fun HomeScreen(navController: NavController) {
             }
         }
     ) {
-        MovieList()
+        MovieList(navController = navController)
     }
 }
 
 @Preview
 @Composable
-fun MovieList(movies: List<Movie> = getMovies()) {
+fun MovieList(
+    movies: List<Movie> = getMovies(),
+    navController: NavController = rememberNavController()
+) {
     LazyColumn {
         items (movies) { movie ->
-            MovieRow(movie = movie) {
-                    movieId -> Log.d("MovieList", "id of movie clicked = $movieId")
+            MovieRow(movie = movie) { movieId ->
+                navController.navigate("detail/$movieId")
             }
         }
     }
