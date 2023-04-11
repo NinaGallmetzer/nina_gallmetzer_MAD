@@ -1,5 +1,7 @@
 package mad.nina_gallmetzer_mad
 
+import kotlin.system.exitProcess
+
 fun main() {
     val generatedNumber = generateNumber()
     var guessedNumber: String
@@ -22,6 +24,13 @@ fun main() {
     } while (n != 4)
 
     println("Congratulations! You guessed the number $generatedNumber in $count tries.")
+    println("Do you want to play again? Y/*")
+    if (readLine() == "Y") {
+        main()
+    } else {
+        println("Thank you for playing this game. See you soon.")
+        exitProcess(-1)
+    }
 }
 
 fun generateNumber(): String {
