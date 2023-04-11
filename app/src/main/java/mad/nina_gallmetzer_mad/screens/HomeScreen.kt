@@ -54,7 +54,10 @@ fun HomeScreen(navController: NavController) {
                 Row {
                     DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
                         DropdownMenuItem(
-                            onClick = {}) {
+                            onClick = {
+                                navController.navigate("favorites")
+                            }
+                        ) {
                             Row {
                                 Icon(
                                     imageVector = Icons.Filled.Favorite,
