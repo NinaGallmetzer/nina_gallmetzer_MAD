@@ -1,5 +1,6 @@
 package mad.nina_gallmetzer_mad
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,9 +12,7 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,16 +25,62 @@ import com.example.movieapp.models.getMovies
 import mad.nina_gallmetzer_mad.ui.theme.Nina_gallmetzer_MADTheme
 
 class MainActivity : ComponentActivity() {
+    @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             Nina_gallmetzer_MADTheme {
+
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    MovieList()
+                    Scaffold(
+                        topBar = {
+                            TopAppBar {
+                                var expanded by remember { mutableStateOf(false) }
+
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(5.dp),
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    Text(
+                                        text = "Movies",
+                                        style = MaterialTheme.typography.h6)
+
+                                    IconButton(
+                                        modifier = Modifier.size(24.dp),
+                                        onClick = { expanded = !expanded },
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Filled.MoreVert,
+                                            contentDescription = "DropdownMenu",
+                                        )
+                                    }
+                                }
+                                
+                                Row {
+                                    DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                                        DropdownMenuItem(
+                                            onClick = {}) {
+                                            Row {
+                                                Icon(
+                                                    imageVector = Icons.Filled.Favorite,
+                                                    contentDescription = "DropdownMenu",
+                                                )
+                                                Text(text = "  Favorites")
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ) {
+                        MovieList()
+                    }
                 }
             }
         }
@@ -102,9 +147,7 @@ fun MovieRow(movie: Movie) {
                         .padding(5.dp))
                 IconButton(
                     modifier = Modifier.size(24.dp),
-                    onClick = {
-                        expanded = !expanded
-                    },
+                    onClick = { expanded = !expanded },
                 ) {
                     if (expanded) {
                         Icon(
