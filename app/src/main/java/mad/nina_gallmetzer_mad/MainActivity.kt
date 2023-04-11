@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -19,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
+import coil.compose.AsyncImage
 import com.example.movieapp.models.Movie
 import com.example.movieapp.models.getMovies
 import mad.nina_gallmetzer_mad.ui.theme.Nina_gallmetzer_MADTheme
@@ -114,12 +113,13 @@ fun MovieRow(movie: Movie) {
                     .height(150.dp)
                     .fillMaxWidth()
             ) {
-                Image(
-                    painter = rememberAsyncImagePainter(movie.images[0]),
+                AsyncImage(
+                    model = movie.images[0],
                     contentDescription = movie.title,
                     modifier = Modifier
                         .fillMaxWidth(),
-                    contentScale = ContentScale.FillWidth)
+                    contentScale = ContentScale.FillWidth
+                    )
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
