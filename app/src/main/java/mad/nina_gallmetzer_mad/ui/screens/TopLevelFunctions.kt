@@ -23,7 +23,7 @@ fun MovieRow(
     onItemClick: (String) -> Unit = {}
 ) {
     var expanded by remember { mutableStateOf(false) }
-    var favorite by remember { mutableStateOf(false) }
+    var favorite by remember { mutableStateOf(movie.isFavorite) }
 
     Card(
         modifier = Modifier
