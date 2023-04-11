@@ -28,7 +28,7 @@ fun main() {
     if (readLine() == "Y") {
         main()
     } else {
-        println("Thank you for playing this game. See you soon.")
+        println("Thank you for playing. See you soon.")
         exitProcess(-1)
     }
 }
