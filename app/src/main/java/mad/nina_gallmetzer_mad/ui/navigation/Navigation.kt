@@ -1,9 +1,8 @@
-package mad.nina_gallmetzer_mad.navigation
+package mad.nina_gallmetzer_mad.ui.navigation
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.*
@@ -13,9 +12,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import mad.nina_gallmetzer_mad.screens.DetailScreen
-import mad.nina_gallmetzer_mad.screens.FavoriteScreen
-import mad.nina_gallmetzer_mad.screens.HomeScreen
+import mad.nina_gallmetzer_mad.ui.screens.DetailScreen
+import mad.nina_gallmetzer_mad.ui.screens.FavoriteScreen
+import mad.nina_gallmetzer_mad.ui.screens.HomeScreen
 import mad.nina_gallmetzer_mad.ui.MovieViewModel
 
 @Composable
@@ -85,32 +84,3 @@ fun HomeAppBar(navController: NavController) {
     }
 }
 
-@Composable
-fun SimpleAppBar(navController: NavController, title: String) {
-    TopAppBar {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(5.dp)
-        ) {
-            IconButton(
-                modifier = Modifier.size(24.dp),
-                onClick = {
-                    navController.navigate("home") {
-                        popUpTo("home")
-                    }
-                },
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = "GoBack"
-                )
-            }
-
-            Text(
-                text = title,
-                style = MaterialTheme.typography.h6,
-                modifier = Modifier.padding(horizontal = 20.dp))
-        }
-    }
-}

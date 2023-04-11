@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import mad.nina_gallmetzer_mad.navigation.Navigation
+import mad.nina_gallmetzer_mad.ui.navigation.Navigation
 import mad.nina_gallmetzer_mad.ui.MovieViewModel
 import mad.nina_gallmetzer_mad.ui.theme.Nina_gallmetzer_MADTheme
 

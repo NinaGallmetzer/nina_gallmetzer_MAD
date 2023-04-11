@@ -1,4 +1,4 @@
-package mad.nina_gallmetzer_mad.screens
+package mad.nina_gallmetzer_mad.ui.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
@@ -11,7 +11,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import mad.nina_gallmetzer_mad.navigation.SimpleAppBar
 import mad.nina_gallmetzer_mad.ui.MovieViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
