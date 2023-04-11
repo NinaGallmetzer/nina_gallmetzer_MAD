@@ -14,7 +14,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.example.movieapp.models.Movie
+import mad.nina_gallmetzer_mad.models.Movie
 
 @Composable
 fun MovieRow(

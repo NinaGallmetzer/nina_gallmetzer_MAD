@@ -3,6 +3,7 @@ package mad.nina_gallmetzer_mad.ui.navigation
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.*
@@ -16,6 +17,7 @@ import mad.nina_gallmetzer_mad.ui.screens.DetailScreen
 import mad.nina_gallmetzer_mad.ui.screens.FavoriteScreen
 import mad.nina_gallmetzer_mad.ui.screens.HomeScreen
 import mad.nina_gallmetzer_mad.ui.MovieViewModel
+import mad.nina_gallmetzer_mad.ui.screens.AddMovieScreen
 
 @Composable
 fun Navigation(
@@ -31,8 +33,12 @@ fun Navigation(
             DetailScreen(movieViewModel, navController, movieId = backStackEntry.arguments?.getString("movieId"))
         }
 
-        composable(route = "favorites") {
+        composable(route = "favorite") {
             FavoriteScreen(movieViewModel, navController)
+        }
+
+        composable(route = "addMovie") {
+            AddMovieScreen(Modifier, movieViewModel, navController)
         }
 
     }
@@ -68,16 +74,27 @@ fun HomeAppBar(navController: NavController) {
             DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
                 DropdownMenuItem(
                     onClick = {
-                        navController.navigate("favorites")
+                        navController.navigate("favorite")
                     }
                 ) {
-                    Row {
-                        Icon(
-                            imageVector = Icons.Filled.Favorite,
-                            contentDescription = "DropdownMenu",
-                        )
-                        Text(text = "  Favorites")
+                    Icon(
+                        imageVector = Icons.Filled.Favorite,
+                        contentDescription = "Show Favorites",
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Text(text = "Favorites")
+                }
+                DropdownMenuItem(
+                    onClick = {
+                        navController.navigate("addMovie")
                     }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Add,
+                        contentDescription = "Add Movie",
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Text(text = "Add Movie")
                 }
             }
         }
