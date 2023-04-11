@@ -7,33 +7,25 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.example.movieapp.models.Movie
-import com.example.movieapp.models.getMovies
 import mad.nina_gallmetzer_mad.navigation.SimpleAppBar
+import mad.nina_gallmetzer_mad.ui.MovieViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun FavoriteScreen(navController: NavController) {
+fun FavoriteScreen(
+    movieViewModel: MovieViewModel,
+    navController: NavController
+) {
     Scaffold(
         topBar = {
-            SimpleAppBar(navController = navController, title = "Favorite Movies")
+            SimpleAppBar(navController = navController, title = "My Favorite Movies")
         }
     ) {
-        Text(text = "Screen displaying favorite movies")
-        FavoriteMovieList(navController = navController)
-    }
-}
-
-@Composable
-fun FavoriteMovieList(
-    movies: List<Movie> = getMovies().take(3),
-    navController: NavController = rememberNavController()
-) {
-    LazyColumn {
-        items (movies) { movie ->
-            MovieRow(movie = movie) { movieId ->
-                navController.navigate("detail/$movieId")
+        LazyColumn {
+            items (movieViewModel.favoriteMovieList) { movie ->
+                MovieRow(movie = movie, { movieViewModel.updateFavorites(movie.id) }) { movieId ->
+                    navController.navigate("detail/$movieId")
+                }
             }
         }
     }

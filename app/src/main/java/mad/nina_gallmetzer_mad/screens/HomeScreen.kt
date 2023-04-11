@@ -14,76 +14,39 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.example.movieapp.models.Movie
-import com.example.movieapp.models.getMovies
+import mad.nina_gallmetzer_mad.navigation.HomeAppBar
+import mad.nina_gallmetzer_mad.ui.MovieViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(
+    movieViewModel: MovieViewModel = viewModel(),
+    navController: NavController
+) {
     Scaffold(
         topBar = {
-            TopAppBar {
-                var expanded by remember { mutableStateOf(false) }
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(5.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = "Movies",
-                        style = MaterialTheme.typography.h6)
-
-                    IconButton(
-                        modifier = Modifier.size(24.dp),
-                        onClick = { expanded = !expanded },
-                    ) {
-                        Icon(
-                            imageVector = Icons.Filled.MoreVert,
-                            contentDescription = "DropdownMenu",
-                        )
-                    }
-                }
-
-                Row {
-                    DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-                        DropdownMenuItem(
-                            onClick = {
-                                navController.navigate("favorites")
-                            }
-                        ) {
-                            Row {
-                                Icon(
-                                    imageVector = Icons.Filled.Favorite,
-                                    contentDescription = "DropdownMenu",
-                                )
-                                Text(text = "  Favorites")
-                            }
-                        }
-                    }
-                }
-            }
+            HomeAppBar(navController = navController)
         }
     ) {
-        MovieList(navController = navController)
+        MovieList(movieViewModel = movieViewModel, navController = navController)
     }
 }
 
-@Preview
+
 @Composable
 fun MovieList(
-    movies: List<Movie> = getMovies(),
+    movieViewModel: MovieViewModel,
     navController: NavController = rememberNavController()
 ) {
     LazyColumn {
-        items (movies) { movie ->
-            MovieRow(movie = movie) { movieId ->
+        items (movieViewModel.movieList) { movie ->
+            MovieRow(movie = movie, { movieViewModel.updateFavorites(movie.id) }) { movieId ->
                 navController.navigate("detail/$movieId")
             }
         }
@@ -91,8 +54,13 @@ fun MovieList(
 }
 
 @Composable
-fun MovieRow(movie: Movie, onItemClick: (String) -> Unit = {}) {
+fun MovieRow(
+    movie: Movie,
+    onFavoriteClick: (String) -> Unit = {},
+    onItemClick: (String) -> Unit = {}
+) {
     var expanded by remember { mutableStateOf(false) }
+    var favorite by remember { mutableStateOf(false) }
 
     Card(
         modifier = Modifier
@@ -123,8 +91,13 @@ fun MovieRow(movie: Movie, onItemClick: (String) -> Unit = {}) {
                 ) {
                     Icon(
                         tint = MaterialTheme.colors.secondary,
-                        imageVector = Icons.Filled.FavoriteBorder,
-                        contentDescription = "Add to favorites"
+                        imageVector = if(favorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                        contentDescription = "Add to favorites",
+                        modifier = Modifier
+                            .clickable {
+                                favorite = !favorite
+                                onFavoriteClick(movie.id)
+                            }
                     )
                 }
             }
