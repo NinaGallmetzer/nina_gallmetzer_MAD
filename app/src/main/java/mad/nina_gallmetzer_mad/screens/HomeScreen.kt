@@ -1,6 +1,8 @@
 package mad.nina_gallmetzer_mad.screens
 
 import android.annotation.SuppressLint
+import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -75,19 +77,22 @@ fun HomeScreen(navController: NavController) {
 fun MovieList(movies: List<Movie> = getMovies()) {
     LazyColumn {
         items (movies) { movie ->
-            MovieRow(movie = movie)
+            MovieRow(movie = movie) {
+                    movieId -> Log.d("MovieList", "id of movie clicked = $movieId")
+            }
         }
     }
 }
 
 @Composable
-fun MovieRow(movie: Movie) {
+fun MovieRow(movie: Movie, onItemClick: (String) -> Unit = {}) {
     var expanded by remember { mutableStateOf(false) }
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(5.dp),
+            .padding(5.dp)
+            .clickable { onItemClick(movie.id) },
         shape = RoundedCornerShape(corner = CornerSize(15.dp)),
         elevation = 5.dp
     ) {
