@@ -11,6 +11,6 @@
     <string name="enter_movie_title_required">Title is required</string>
     <string name="enter_movie_year_required">Year is required</string>
     <string name="enter_movie_director_required">Director is required</string>
-    <string name="enter_movie_rating_required">Rating is required</string>
     <string name="enter_movie_actors_required">Actors are required</string>
+    <string name="enter_movie_rating_required">Rating is required</string>
 </resources>
