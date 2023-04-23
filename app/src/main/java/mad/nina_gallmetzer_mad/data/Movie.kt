@@ -6,15 +6,15 @@ import androidx.room.PrimaryKey
 @Entity
 data class Movie(
     @PrimaryKey
-    val id: String,
-    val title: String,
-    val year: String,
-    val genre: String,
-    val director: String,
-    val actors: String,
-    val plot: String,
-    val titleImage: String,
-    val rating: Float,
+    val id: String = "",
+    val title: String = "",
+    val year: String = "",
+    val genre: String = "",
+    val director: String = "",
+    val actors: String = "",
+    val plot: String = "",
+    val titleImage: String = "",
+    val rating: Float = 0.0f,
     var isFavorite: Boolean = false
 )
 
@@ -40,7 +40,7 @@ fun getInitialMovies(): List<Movie> {
             director = "Zack Snyder",
             actors = "Gerard Butler, Lena Headey, Dominic West, David Wenham",
             plot = "King Leonidas of Sparta and a force of 300 men fight the Persians at Thermopylae in 480 B.C.",
-            titleImage = "https://images-na.ssl-images-amazon.com/images/M/MV5BMjEyOTYyMzUxNl5BMl5BanBnXkFtZTcwNTg0MTUzNA@@._V1_SX1500_CR0,0,1500,999_AL_.jpg",
+            titleImage = "https://images-na.ssl-images-amazon.com/images/M/MV5BMTMwNTg5MzMwMV5BMl5BanBnXkFtZTcwMzA2NTIyMw@@._V1_SX1777_CR0,0,1777,937_AL_.jpg",
             rating = 7.7f
         ),
 

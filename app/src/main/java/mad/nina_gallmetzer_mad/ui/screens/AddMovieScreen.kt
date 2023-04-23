@@ -10,22 +10,34 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import kotlinx.coroutines.launch
 import mad.nina_gallmetzer_mad.R
 import mad.nina_gallmetzer_mad.data.Genre
-import mad.nina_gallmetzer_mad.ui.MovieViewModel
+import mad.nina_gallmetzer_mad.data.MovieDatabase
+import mad.nina_gallmetzer_mad.data.MovieRepository
+import mad.nina_gallmetzer_mad.viewmodels.AddMovieScreenViewModel
+import mad.nina_gallmetzer_mad.viewmodels.AddMovieScreenViewModelFactory
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun AddMovieScreen(
     modifier: Modifier = Modifier,
-    movieViewModel: MovieViewModel,
     navController: NavHostController,
 ) {
+    val db = MovieDatabase.getDatabase(LocalContext.current)
+    val repository = MovieRepository(movieDao = db.movieDao(), imageDao = db.imageDao())
+    val factory = AddMovieScreenViewModelFactory(repository = repository)
+    val addMovieScreenViewModel: AddMovieScreenViewModel = viewModel(factory = factory)
+
+    val coroutineScope = rememberCoroutineScope()
+
     Column {
         SimpleAppBar(title = "Add a Movie", navController = navController)
         Surface(
@@ -61,7 +73,7 @@ fun AddMovieScreen(
                 var genreItems by remember {
                     mutableStateOf(
                         genres.map { genre ->
-                            MovieViewModel.ListItemSelectable(
+                            AddMovieScreenViewModel.ListItemSelectable(
                                 title = genre,
                                 isSelected = false
                             )
@@ -244,12 +256,14 @@ fun AddMovieScreen(
                     )
                 }
 
-                isEnabledSaveButton = movieViewModel.isValidMovie(title, year, genreItems.filter { x -> x.isSelected }.map { x -> x.title }, director, actors, rating.toFloatOrNull() ?: 0.0f)
+                isEnabledSaveButton = addMovieScreenViewModel.isValidMovie(title, year, genreItems.filter { x -> x.isSelected }.map { x -> x.title }, director, actors, rating.toFloatOrNull() ?: 0.0f)
 
                 Button(
                     enabled = isEnabledSaveButton,
                     onClick = {
-                        movieViewModel.addNewMovie(title, year, genreItems.filter { x -> x.isSelected }.map { x -> x.title }, director, actors, plot, listOf("https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"), rating.toFloatOrNull() ?: 0.0f)
+                        coroutineScope.launch {
+                            addMovieScreenViewModel.addNewMovie(title, year, genreItems.filter { x -> x.isSelected }.map { x -> x.title }, director, actors, plot, "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg", rating.toFloatOrNull() ?: 0.0f)
+                        }
                         navController.navigate("home")
                     }) {
                     Text(text = stringResource(R.string.add))

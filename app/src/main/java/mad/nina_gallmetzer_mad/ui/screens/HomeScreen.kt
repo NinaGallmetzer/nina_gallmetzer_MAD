@@ -11,6 +11,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.launch
 import mad.nina_gallmetzer_mad.data.MovieDatabase
 import mad.nina_gallmetzer_mad.data.MovieRepository
 import mad.nina_gallmetzer_mad.ui.navigation.HomeAppBar
@@ -22,30 +23,41 @@ import mad.nina_gallmetzer_mad.viewmodels.HomeScreenViewModelFactory
 fun HomeScreen(
     navController: NavController
 ) {
-    val db = MovieDatabase.getDatabase(LocalContext.current)
-    val repository = MovieRepository(movieDao = db.movieDao(), imageDao = db.imageDao())
-    val factory = HomeScreenViewModelFactory(repository = repository)
-    val homeScreenViewModel: HomeScreenViewModel = viewModel(factory = factory)
-
     Scaffold(
         topBar = {
             HomeAppBar(navController = navController)
         }
     ) {
-        MovieList(homeScreenViewModel = homeScreenViewModel, navController = navController)
+        MovieList(navController = navController)
     }
 }
+
 
 @Composable
 fun MovieList(
-    homeScreenViewModel: HomeScreenViewModel,
     navController: NavController = rememberNavController()
 ) {
-    Text(text = "test on Home Screen")
+    val db = MovieDatabase.getDatabase(LocalContext.current)
+    val repository = MovieRepository(movieDao = db.movieDao(), imageDao = db.imageDao())
+    val factory = HomeScreenViewModelFactory(repository = repository)
+    val homeScreenViewModel: HomeScreenViewModel = viewModel(factory = factory)
+
+    val movieList = homeScreenViewModel.movieList.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
+
     LazyColumn {
-        items (homeScreenViewModel.movieList.value) { movie ->
-            MovieRow(movie = movie)
+        items (movieList.value) { movie ->
+            MovieRow(
+                movie = movie,
+                onFavoriteClick = {
+                    coroutineScope.launch {
+                        homeScreenViewModel.toggleFavoriteState(movie)
+                    }
+                },
+                onItemClick = { movieId ->
+                    navController.navigate("detail/$movieId")
+                }
+            )
         }
     }
 }
-

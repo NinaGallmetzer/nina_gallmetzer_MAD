@@ -24,10 +24,10 @@ interface MovieDao {
     fun getFavoriteMovies(): Flow<List<Movie>>
 
     @Query("SELECT * from Movie WHERE id = :id")
-    fun getMovieById(id: String): Flow<Movie?>
+    fun getMovieById(id: String): Flow<Movie>
 
     @Transaction
     @Query("SELECT * FROM Movie")
-    fun getMoviesWithImages(): List<MovieWithImages>
+    fun getMovieWithImages(): Flow<List<MovieWithImages>>
 
 }

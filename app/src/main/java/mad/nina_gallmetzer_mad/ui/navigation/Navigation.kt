@@ -16,12 +16,10 @@ import androidx.navigation.compose.composable
 import mad.nina_gallmetzer_mad.ui.screens.DetailScreen
 import mad.nina_gallmetzer_mad.ui.screens.FavoriteScreen
 import mad.nina_gallmetzer_mad.ui.screens.HomeScreen
-import mad.nina_gallmetzer_mad.ui.MovieViewModel
 import mad.nina_gallmetzer_mad.ui.screens.AddMovieScreen
 
 @Composable
 fun Navigation(
-    movieViewModel: MovieViewModel,
     navController: NavHostController
 ) {
     NavHost(navController = navController, startDestination = "home") {
@@ -38,7 +36,7 @@ fun Navigation(
         }
 
         composable(route = "addMovie") {
-            AddMovieScreen(Modifier, movieViewModel, navController)
+            AddMovieScreen(Modifier, navController)
         }
 
     }
