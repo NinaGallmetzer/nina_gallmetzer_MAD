@@ -26,15 +26,15 @@ fun Navigation(
 ) {
     NavHost(navController = navController, startDestination = "home") {
         composable(route = "home") {
-            HomeScreen(movieViewModel, navController)
+            HomeScreen(navController)
         }
 
         composable(route = "detail/{movieId}") { backStackEntry ->
-            DetailScreen(movieViewModel, navController, movieId = backStackEntry.arguments?.getString("movieId"))
+            DetailScreen(navController, movieId = backStackEntry.arguments?.getString("movieId"))
         }
 
         composable(route = "favorite") {
-            FavoriteScreen(movieViewModel, navController)
+            FavoriteScreen(navController)
         }
 
         composable(route = "addMovie") {

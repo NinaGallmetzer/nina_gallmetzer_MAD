@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import mad.nina_gallmetzer_mad.ui.navigation.Navigation
 import mad.nina_gallmetzer_mad.ui.MovieViewModel
 import mad.nina_gallmetzer_mad.ui.theme.Nina_gallmetzer_MADTheme
+import mad.nina_gallmetzer_mad.viewmodels.HomeScreenViewModel
 
 class MainActivity : ComponentActivity() {
     lateinit var movieViewModel: MovieViewModel

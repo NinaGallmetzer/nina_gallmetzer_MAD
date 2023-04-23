@@ -1,4 +1,4 @@
-package mad.nina_gallmetzer_mad.database
+package mad.nina_gallmetzer_mad.data
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
@@ -7,6 +7,9 @@ import kotlinx.coroutines.flow.Flow
 interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(movie: Movie)
+
+    @Insert
+    fun insertOnCreate(movie: Movie)
 
     @Update
     suspend fun update(movie: Movie)
@@ -22,5 +25,9 @@ interface MovieDao {
 
     @Query("SELECT * from Movie WHERE id = :id")
     fun getMovieById(id: String): Flow<Movie?>
+
+    @Transaction
+    @Query("SELECT * FROM Movie")
+    fun getMoviesWithImages(): List<MovieWithImages>
 
 }

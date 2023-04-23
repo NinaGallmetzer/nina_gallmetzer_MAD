@@ -5,7 +5,7 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import mad.nina_gallmetzer_mad.models.Movie
 import mad.nina_gallmetzer_mad.models.getMovies
-import mad.nina_gallmetzer_mad.models.Genre
+import mad.nina_gallmetzer_mad.data.Genre
 
 class MovieViewModel: ViewModel() {
 

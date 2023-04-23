@@ -14,7 +14,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import mad.nina_gallmetzer_mad.models.Movie
+import mad.nina_gallmetzer_mad.data.Movie
 
 @Composable
 fun MovieRow(
@@ -40,7 +40,7 @@ fun MovieRow(
                     .fillMaxWidth()
             ) {
                 AsyncImage(
-                    model = movie.images[0],
+                    model = movie.titleImage,
                     contentDescription = movie.title,
                     modifier = Modifier
                         .fillMaxWidth(),

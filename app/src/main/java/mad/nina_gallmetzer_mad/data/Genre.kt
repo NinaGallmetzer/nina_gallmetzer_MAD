@@ -1,4 +1,4 @@
-package mad.nina_gallmetzer_mad.models
+package mad.nina_gallmetzer_mad.data
 
 enum class Genre {
     ACTION,

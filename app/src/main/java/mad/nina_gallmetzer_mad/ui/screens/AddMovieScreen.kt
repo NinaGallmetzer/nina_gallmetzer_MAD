@@ -16,7 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import mad.nina_gallmetzer_mad.R
-import mad.nina_gallmetzer_mad.models.Genre
+import mad.nina_gallmetzer_mad.data.Genre
 import mad.nina_gallmetzer_mad.ui.MovieViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
